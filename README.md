@@ -69,3 +69,36 @@ Allow a player to specify which category they want to score the roll in. Include
 
 ### Algorithmic complexity
 Sometimes in Yahtzee, the best move on any given round is not to score the thing that gives you the most points immediately, hoping to save the opportunity to score more points in a category on a later roll. Consider adding more complexity to your algorithm responsible for deciding which category to score. How will you test this?
+
+## Domain Defintions
+
+### Roll
+A roll is considered the set of 5 dice rolls. The function `roll()` is one round of the game.
+
+### Set
+The collection of the 5 rolled dice.
+
+### Score
+The running score of the game, which becomes the total score by the final round. 
+
+### Roll Score Options
+The set of all possible category scores for a roll.
+
+### Category
+All possible categories:
+
+| Category  | What to Score |
+| ------------- | ------------- |
+| Ones  | Sum of 1s rolled |
+| Twos | Sum of 2s rolled |
+| Threes | Sum of 3s rolled |
+| Fours | Sum of 4s rolled |
+| Fives | Sum of 5s rolled |
+| Sixes | Sum of 6s rolled |
+| 3 of a Kind | Total of all 5 dice |
+| 4 of a Kind | Total of all 5 dice |
+| Full House | 25 points |
+| Small Straight | 30 points |
+| Large Straight | 40 points |
+| Yahtzee (5 of a Kind) | 50 points |
+| Chance | Total of all 5 dice |
