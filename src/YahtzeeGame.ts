@@ -1,9 +1,9 @@
 export class YahtzeeGame {
 
-  runningScore: number;
-  round: number;
-  categoryScorer: CategoryScorer;
-  chooser: Chooser;
+  private runningScore: number;
+  private round: number;
+  private categoryScorer: CategoryScorer;
+  private chooser: Chooser;
 
   constructor(categoryScorer: CategoryScorer, chooser: Chooser) {
     this.round = 1;
@@ -17,7 +17,10 @@ export class YahtzeeGame {
       return;
     }
 
-    this.runningScore += sum(roll)
+    const scores = this.categoryScorer.score(roll)
+    const chosenScore = this.chooser.choose(scores)
+
+    this.runningScore += chosenScore
     this.round += 1
   }
 
@@ -26,11 +29,7 @@ export class YahtzeeGame {
   }
 }
 
-const sum = (roll: number[]): number => {
-  return roll.reduce((acc, cur) => acc+cur, 0)
-}
-
-type CategoryScores = {
+export type CategoryScores = {
   ones: number;
   twos: number;
 }
