@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "tsx YahtzeeGame.ts",
     "test": "jest"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.5.5",
     "@typescript-eslint/parser": "^6.19.0",
