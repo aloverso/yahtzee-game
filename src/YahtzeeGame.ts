@@ -52,13 +52,29 @@ export class YahtzeeGame {
 /* takes a roll, determines all possible categories */
 export const possibleCategories = (roll: Roll): PossibleCategories => {
 
-  const hasXOfAKind = (x: number): boolean => Object.values(roll).some((value) => value >= x)
+  const hasXOfAKind = (x: number, rolls: Roll): boolean => Object.values(rolls).some((value) => value >= x)
 
   const hasFullHouse = () => {
     const threeOfAKindDice = Object.keys(roll).find((key) => roll[key] >= 3)
     if (!threeOfAKindDice) return false;
     const rollWithoutThreeOfAKindDice = { ...roll, [threeOfAKindDice]: 0 }
-    return Object.values(rollWithoutThreeOfAKindDice).some((value) => value >= 2)
+    return hasXOfAKind(2, rollWithoutThreeOfAKindDice)
+  }
+
+  const hasSmallStraight = () => {
+    if (roll.ones > 0) {
+      return (roll.twos > 0 && roll.threes > 0 && roll.fours > 0)
+    } else if (roll.twos > 0) {
+      return (roll.threes > 0 && roll.fours > 0 && roll.fives > 0)
+    }
+    return roll.threes > 0 && roll.fours > 0 && roll.fives >0 && roll.sixes > 0
+  }
+
+  const hasLargeStraight = () => {
+    if (roll.ones > 0) {
+      return (roll.twos > 0 && roll.threes > 0 && roll.fours > 0 && roll.fives > 0)
+    }
+    return roll.twos > 0 && roll.threes > 0 && roll.fours > 0 && roll.fives >0 && roll.sixes > 0
   }
 
   return {
@@ -68,11 +84,11 @@ export const possibleCategories = (roll: Roll): PossibleCategories => {
     fours: roll.fours > 0,
     fives: roll.fives > 0,
     sixes: roll.sixes > 0,
-    threeOfAKind: hasXOfAKind(3),
-    fourOfAKind: hasXOfAKind(4),
+    threeOfAKind: hasXOfAKind(3, roll),
+    fourOfAKind: hasXOfAKind(4, roll),
     fullHouse: hasFullHouse(),
-    smallStraight: false,
-    largeStraight: false,
+    smallStraight: hasSmallStraight(),
+    largeStraight: hasLargeStraight(),
     yahtzee: false,
     chance: false,
   };

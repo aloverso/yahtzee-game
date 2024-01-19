@@ -89,4 +89,27 @@ describe("PossibleCategories", () => {
     expect(possibleCategories(roll).threeOfAKind).toEqual(true);
     expect(possibleCategories(roll).fullHouse).toEqual(false);
   });
+
+  it("smallStraight when every 4 dice are rolled once", () => {
+    const roll = { ones: 0, twos: 2, threes: 1, fours: 1, fives: 1, sixes: 0 };
+    expect(possibleCategories(roll).twos).toEqual(true);
+    expect(possibleCategories(roll).threes).toEqual(true);
+    expect(possibleCategories(roll).fours).toEqual(true);
+    expect(possibleCategories(roll).fives).toEqual(true);
+    expect(possibleCategories(roll).smallStraight).toEqual(true);
+  });
+
+  it("large when every 5 dice are rolled once", () => {
+    const roll = { ones: 0, twos: 1, threes: 1, fours: 1, fives: 1, sixes: 1 };
+    expect(possibleCategories(roll).twos).toEqual(true);
+    expect(possibleCategories(roll).threes).toEqual(true);
+    expect(possibleCategories(roll).fours).toEqual(true);
+    expect(possibleCategories(roll).fives).toEqual(true);
+    expect(possibleCategories(roll).sixes).toEqual(true);
+    expect(possibleCategories(roll).smallStraight).toEqual(true);
+    expect(possibleCategories(roll).largeStraight).toEqual(true);
+  });
+
+
+
 });
