@@ -6,8 +6,8 @@ export class YahtzeeGame {
   }
 
   roll(dice: number[]): void {
-    let diceValueCounts = [-1, 0, 0, 0, 0, 0, 0];
-    for (let die of dice) {
+    const diceValueCounts = [-1, 0, 0, 0, 0, 0, 0];
+    for (const die of dice) {
       if (die === 1) {
         diceValueCounts[1] = diceValueCounts[1] + 1;
       }
@@ -33,7 +33,14 @@ export class YahtzeeGame {
     // checking for Yahtzee
     if (diceValueCounts.includes(5)) {
       this.totalScore += 50;
-      return;
+    }
+    // checking for large straight
+    else if (this.isLargeStraight(dice)) {
+      this.totalScore += 40;
+    }
+    // checking for small straight
+    else if (this.isShortStright(dice)) {
+      this.totalScore += 30;
     }
     // checking for full house
     else if (diceValueCounts.includes(3) && diceValueCounts.includes(2)) {
@@ -59,7 +66,38 @@ export class YahtzeeGame {
       }
       this.totalScore = maxCountIndex * maxCount;
     }
+  }
 
+  private isShortStright(dice: number[]): boolean {
+    return (
+      (dice.includes(1) &&
+        dice.includes(2) &&
+        dice.includes(3) &&
+        dice.includes(4)) ||
+      (dice.includes(2) &&
+        dice.includes(3) &&
+        dice.includes(4) &&
+        dice.includes(5)) ||
+      (dice.includes(3) &&
+        dice.includes(4) &&
+        dice.includes(5) &&
+        dice.includes(6))
+    );
+  }
+
+  private isLargeStraight(dice: number[]): boolean {
+    return (
+      (dice.includes(1) &&
+        dice.includes(2) &&
+        dice.includes(3) &&
+        dice.includes(4) &&
+        dice.includes(5)) ||
+      (dice.includes(2) &&
+        dice.includes(3) &&
+        dice.includes(4) &&
+        dice.includes(5) &&
+        dice.includes(6))
+    );
   }
 
   score(): number {
@@ -68,7 +106,7 @@ export class YahtzeeGame {
 
   private sumOfRolledDie(dice: number[]): number {
     let sum = 0;
-    for (let die of dice) {
+    for (const die of dice) {
       sum += die;
     }
     return sum;

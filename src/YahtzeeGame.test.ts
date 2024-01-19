@@ -42,6 +42,34 @@ describe("Yahtzee Game", () => {
     expect(game.score()).toEqual(25);
   });
 
+  describe("shortStraight on the first round", () => {
+    it("scores 30 points from 1 to 4", () => {
+      game.roll([1, 2, 3, 4, 4]);
+      expect(game.score()).toEqual(30);
+    });
+
+    it("scores 30 points from 2 to 5", () => {
+      game.roll([2, 3, 4, 5, 5]);
+      expect(game.score()).toEqual(30);
+    });
+
+    it("scores 30 points from 3 to 6", () => {
+      game.roll([3, 3, 4, 5, 6]);
+      expect(game.score()).toEqual(30);
+    });
+  });
+
+  describe("largeStraight on the first round", () => {
+    it("should score 40 points when there is a large straight on the first round", () => {
+      game.roll([1, 2, 3, 4, 5]);
+      expect(game.score()).toEqual(40);
+    });
+    it("should score 40 points when there is a large straight on the first round", () => {
+      game.roll([2, 3, 4, 5, 6]);
+      expect(game.score()).toEqual(40);
+    });
+  });
+
   it("should score 50 with 5 of a kind on the first round", () => {
     game.roll([1, 1, 1, 1, 1]);
     expect(game.score()).toEqual(50);
