@@ -31,6 +31,18 @@ describe("Yahtzee Game", () => {
         expect(CATEGORIES.sumOfTwos(diceValues)).toEqual(expectedSum);
       })
     });
+
+    describe("sum of 3s", () => {
+      it.each(
+          [
+              [[1, 2, 3, 4, 5], 3],
+              [[2, 3, 3, 3, 5], 9],
+              [[5, 1, 6, 4, 5], 0],
+          ]
+      )("score matches expected val", (diceValues, expectedSum) => {
+        expect(CATEGORIES.sumOfThrees(diceValues)).toEqual(expectedSum);
+      })
+    });
   });
 });
 

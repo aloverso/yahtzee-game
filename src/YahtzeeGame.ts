@@ -29,6 +29,12 @@ export class Categories {
       filter((val) => val === 2).
       reduce((partial, acc) => partial + acc, 0);
   }
+
+  sumOfThrees(diceValues: number[]): number {
+    return diceValues.
+      filter((val) => val === 3).
+      reduce((partial, acc) => partial + acc, 0);
+  }
 }
 
 // export class ScoreCard {
