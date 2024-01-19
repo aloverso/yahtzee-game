@@ -16,55 +16,83 @@ describe("Yahtzee Game", () => {
   //   expect(game.score()).toEqual(3);
   // });
 
-  it("scores yahtzee properly on round 1", () => {
+  describe('round 1', () => {
+    it("scores yahtzee properly on round 1", () => {
 
-    game.roll([1, 1, 1, 1, 1]);
-    expect(game.score()).toEqual(50);
-  });
+      game.roll([1, 1, 1, 1, 1]);
+      expect(game.score()).toEqual(50);
+    });
 
-  it("doesn't score a yahtzee if a yahtzee wasn't rolled", () => {
-    game.roll([1, 3, 1, 1, 1]);
-    expect(game.score()).not.toEqual(50);
-  });
+    it("doesn't score a yahtzee if a yahtzee wasn't rolled", () => {
+      game.roll([1, 3, 1, 1, 1]);
+      expect(game.score()).not.toEqual(50);
+    });
 
-  it("scores large straight properly on round 1", () => {
-    const game1 = new YahtzeeGame();
-    game1.roll([1, 2, 3, 4, 5]);
-    expect(game1.score()).toEqual(40);
+    it("scores large straight properly on round 1", () => {
+      const game1 = new YahtzeeGame();
+      game1.roll([1, 2, 3, 4, 5]);
+      expect(game1.score()).toEqual(40);
 
-    const game2 = new YahtzeeGame();
-    game2.roll([6, 2, 3, 4, 5]);
-    expect(game2.score()).toEqual(40);
-  });
+      const game2 = new YahtzeeGame();
+      game2.roll([6, 2, 3, 4, 5]);
+      expect(game2.score()).toEqual(40);
+    });
 
-  it("scores small straight properly on round 1", () => {
-    const game1 = new YahtzeeGame();
-    game1.roll([1, 2, 3, 4, 6]);
-    expect(game1.score()).toEqual(30);
+    it("scores small straight properly on round 1", () => {
+      const game1 = new YahtzeeGame();
+      game1.roll([1, 2, 3, 4, 6]);
+      expect(game1.score()).toEqual(30);
 
-    const game2 = new YahtzeeGame();
-    game2.roll([3, 2, 3, 4, 5]);
-    expect(game2.score()).toEqual(30);
+      const game2 = new YahtzeeGame();
+      game2.roll([3, 2, 3, 4, 5]);
+      expect(game2.score()).toEqual(30);
 
-    const game3 = new YahtzeeGame();
-    game3.roll([3, 6, 3, 4, 5]);
-    expect(game3.score()).toEqual(30);
-  });
+      const game3 = new YahtzeeGame();
+      game3.roll([3, 6, 3, 4, 5]);
+      expect(game3.score()).toEqual(30);
+    });
 
-  // REMINDER: TEST STRAIGHTS THAT CAN BE BIG OR SMALL DEPENDING ON WHATS TAKEN
+    // REMINDER: TEST STRAIGHTS THAT CAN BE BIG OR SMALL DEPENDING ON WHATS TAKEN
 
-  it.each([
-    [[1,1,2,2,2]],
-    [[3,5,5,3,5]]
-  ])
-  ("scores full house properly on round 1", (diceValues) => {
-    game.roll(diceValues);
-    expect(game.score()).toEqual(25);
-  });
+    it.each([
+      [[1,1,2,2,2]],
+      [[3,5,5,3,5]]
+    ])
+    ("scores full house properly on round 1", (diceValues) => {
+      game.roll(diceValues);
+      expect(game.score()).toEqual(25);
+    });
 
-  it("scores four of kind properly on round 1", () => {
-    game.roll([3,3,3,3,1]);
-    expect(game.score()).toEqual(13);
+    it("scores four of kind properly on round 1", () => {
+      game.roll([3,3,3,3,1]);
+      expect(game.score()).toEqual(13);
+    })
+
+    it("scores three of kind properly on round 1", () => {
+      game.roll([3,3,3,4,1]);
+      expect(game.score()).toEqual(14);
+    })
+
+    it("scores sixes properly on round 1", () => {
+      game.roll([2,6,6,4,1]);
+      expect(game.score()).toEqual(12);
+    })
+
+    it("scores highest scoring number properly on round 1", () => {
+      game.roll([2,5,3,1,1]);
+      expect(game.score()).toEqual(5);
+    })
   })
-  // testing
+
+  describe('round 2', () => {
+    it("scores yahtzee as 4 of a kind on round 2", () => {
+      game.roll([1, 1, 1, 1, 1]);
+      expect(game.score()).toEqual(50);
+      game.roll([4, 4, 4, 4, 4]);
+      expect(game.score()).toEqual(50+20);
+    });
+  })
+
+
+
 });

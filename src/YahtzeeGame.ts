@@ -1,11 +1,11 @@
 export class YahtzeeGame {
   ScoreCard: {
-    ones: number;
-    twos: number;
-    threes: number;
-    fours: number;
-    fives: number;
-    sixes: number;
+    1: number;
+    2 : number;
+    3: number;
+    4: number;
+    5: number;
+    6: number;
     threeOfAKind: number;
     fourOfAKind: number;
     fullHouse: number;
@@ -17,12 +17,12 @@ export class YahtzeeGame {
 
   constructor() {
     this.ScoreCard = {
-      ones: 0,
-      twos: 0,
-      threes: 0,
-      fours: 0,
-      fives: 0,
-      sixes: 0,
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+      6: 0,
       threeOfAKind: 0,
       fourOfAKind: 0,
       fullHouse: 0,
@@ -38,18 +38,27 @@ export class YahtzeeGame {
       this.ScoreCard.yahtzee = 50;
     }
 
-    if (this.isLargeStraight(diceValues)) {
+    else if (this.isLargeStraight(diceValues)) {
       this.ScoreCard.largeStraight = 40;
     } else if (this.isSmallStraight(diceValues)) {
       this.ScoreCard.smallStraight = 30;
     }
 
-    if (this.isFullHouse(diceValues)) {
+    else if (this.isFullHouse(diceValues)) {
       this.ScoreCard.fullHouse = 25;
     }
 
-    if(this.isSumOfDiceValuesCategory(diceValues)) {
+    else if(this.isFourOfAKind(diceValues)) {
       this.ScoreCard.fourOfAKind = this.sumOfDice(diceValues);
+    }
+
+    else if(this.isThreeOfAKind(diceValues)) {
+      this.ScoreCard.threeOfAKind = this.sumOfDice(diceValues);
+    }
+
+    else {
+      const highestIndex = this.highestScoringFace(diceValues)
+      this.ScoreCard[highestIndex] = this.getDiceFaceCounts(diceValues)[highestIndex] * highestIndex
     }
   }
 
@@ -87,9 +96,27 @@ export class YahtzeeGame {
     return faceValues.includes(3) && faceValues.includes(2)
   }
 
-  private isSumOfDiceValuesCategory(diceValues: number[]): boolean {
+  private isFourOfAKind(diceValues: number[]): boolean {
     const faceValues = this.getDiceFaceCounts(diceValues)
     return faceValues.includes(4)
+  }
+
+  private isThreeOfAKind(diceValues: number[]): boolean {
+    const faceValues = this.getDiceFaceCounts(diceValues)
+    return faceValues.includes(3)
+  }
+
+  private highestScoringFace(diceValues: number[]): number {
+    const faceValues = this.getDiceFaceCounts(diceValues)
+    let highestScore= 0
+    let highestScoreIndex = -1
+    for(let i = 1; i < faceValues.length; i++){
+      if(faceValues[i] * i > highestScore){
+        highestScore = faceValues[i] * i
+        highestScoreIndex = i
+      }
+    }
+    return highestScoreIndex
   }
 
   private sumOfDice(diceValues: number[]): number {
