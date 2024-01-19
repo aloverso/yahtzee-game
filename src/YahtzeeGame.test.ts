@@ -1,19 +1,23 @@
-import { YahtzeeGame } from './YahtzeeGame'
+import { YahtzeeGame } from "./YahtzeeGame";
 
-describe('Yahtzee Game', () => {
+describe("Yahtzee Game", () => {
+  let game: YahtzeeGame;
 
-  it('starts with score 0', () => {
-    expect(new YahtzeeGame().score()).toEqual(0)
-  })
+  beforeEach(() => {
+    game = new YahtzeeGame();
+  });
 
-  it('scores a roll as Chance and increments the score by the sum of 5 dice rolled', () => {
-    const game = new YahtzeeGame()
-    game.roll([1,2,3,4,5])
-    expect(game.score()).toEqual(15)
-  })
+  it("starts with score 0", () => {
+    expect(game.score()).toEqual(0);
+  });
 
-  it('scores a roll as 4 of a kind and increments the score by 40', () => {
-    
-  })
+  it("scores a roll as Chance and increments the score by the sum of 5 dice rolled", () => {
+    game.roll([1, 2, 3, 4, 5]);
+    expect(game.score()).toEqual(15);
+  });
 
-})
+  it("scores a roll as 4 of a kind and increments the score by 40", () => {
+    game.roll([5, 5, 5, 5, 2]);
+    expect(game.score()).toEqual(20);
+  });
+});
