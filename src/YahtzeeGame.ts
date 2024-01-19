@@ -1,4 +1,3 @@
-
 /*
 
 What to do:
@@ -19,14 +18,11 @@ interface Roll {
 }
 
 export class YahtzeeGame {
-  constructor() {
-  }
+  constructor() {}
 
-  roll (roll: Roll): void {
+  roll(roll: Roll): void {}
 
-  }
-
-  score (): number {
-    return 0
+  score(): number {
+    return 0;
   }
 }
