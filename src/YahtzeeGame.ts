@@ -52,20 +52,15 @@ interface ScoreSheet {
   [key: string]: number | null;
 }
 
-export class YahtzeeGame {
-  runningScore: number;
-
-  constructor() {
-    this.runningScore = 0;
+export const scorer = (possibleCategories: PossibleCategories): number => {
+  if (possibleCategories.yahtzee) {
+    return 50;
+  }
+  if(possibleCategories.largeStraight) {
+    return 40;
   }
 
-  roll(roll: Roll): void {
-    this.runningScore = 50;
-  }
-
-  score(): number {
-    return this.runningScore;
-  }
+  return 0;
 }
 
 /* takes a roll, determines all possible categories */
@@ -122,3 +117,19 @@ export const possibleCategories = (roll: Roll): PossibleCategories => {
     chance: true,
   };
 };
+
+export class YahtzeeGame {
+  runningScore: number;
+
+  constructor() {
+    this.runningScore = 0;
+  }
+
+  roll(roll: Roll): void {
+    const possibleCategories = possibleCategories(roll);
+  }
+
+  score(): number {
+    return this.runningScore;
+  }
+}

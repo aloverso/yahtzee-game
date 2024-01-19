@@ -1,4 +1,4 @@
-import { YahtzeeGame, possibleCategories } from "./YahtzeeGame";
+import { YahtzeeGame, possibleCategories, scorer } from "./YahtzeeGame";
 
 describe("Yahtzee Game", () => {
   let game: YahtzeeGame;
@@ -18,10 +18,57 @@ describe("Yahtzee Game", () => {
     });
   });
 
-  describe("Score", () => {
-    it("increases the score by the right amount for a yahtzee", () => {
+  describe("Game", () => {
+    it("scores yahtzee on first roll, four of a kind on second yahtzee", () => {
       game.roll({ ones: 0, twos: 0, threes: 0, fours: 0, fives: 0, sixes: 5 });
-      expect(game.score()).toEqual(50);
+      expect(game.score()).toBeGreaterThan(50);
+
+      game.roll({ ones: 0, twos: 0, threes: 0, fours: 0, fives: 0, sixes: 5 });
+      expect(game.score()).toBeGreaterThan(50 + 6 * 5);
+    });
+  });
+
+  describe("Scorer function", () => {
+    it("if there's a yahtzee, the scorer will return 50 points", () => {
+      const possibleCategories = {
+        ones: false,
+        twos: false,
+        threes: false,
+        fours: false,
+        fives: false,
+        sixes: true,
+        threeOfAKind: true,
+        fourOfAKind: true,
+        fullHouse: false,
+        smallStraight: false,
+        largeStraight: false,
+        yahtzee: true,
+        chance: true,
+      }
+
+      const score = scorer(possibleCategories);
+      expect(score).toEqual(50);
+    });
+
+    it("if there's a large straight and no yahtzee, the scorer will return 40 points", () => {
+      const possibleCategories = {
+        ones: false,
+        twos: false,
+        threes: false,
+        fours: false,
+        fives: false,
+        sixes: false,
+        threeOfAKind: false,
+        fourOfAKind: false,
+        fullHouse: false,
+        smallStraight: true,
+        largeStraight: true,
+        yahtzee: false,
+        chance: true,
+      }
+
+      const score = scorer(possibleCategories);
+      expect(score).toEqual(40);
     });
   });
 
