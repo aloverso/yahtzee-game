@@ -69,3 +69,6 @@ Allow a player to specify which category they want to score the roll in. Include
 
 ### Algorithmic complexity
 Sometimes in Yahtzee, the best move on any given round is not to score the thing that gives you the most points immediately, hoping to save the opportunity to score more points in a category on a later roll. Consider adding more complexity to your algorithm responsible for deciding which category to score. How will you test this?
+
+### Joker rules
+See rulebook for more specific rules on how to score a second Yahtzee
