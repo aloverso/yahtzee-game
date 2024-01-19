@@ -27,11 +27,7 @@ export class YahtzeeGame {
         diceValueCounts[6] = diceValueCounts[6] + 1;
       }
     }
-    // [-, 1, 2, 0, 1, 1 ]
-    // {0: -1, 1: 1, 2: 2, 3: 0, 4: 1, 5: 1, 6: 0}
-    // [2, 2, 2, 2, 6]
-    // [ -1,0,4,0,0,0,1]
-    // [-1.1,1,1,0,0,1]
+
     console.log(diceValueCounts);
 
     // checking for Yahtzee
@@ -39,20 +35,31 @@ export class YahtzeeGame {
       this.totalScore += 50;
       return;
     }
+    // checking for full house
+    else if (diceValueCounts.includes(3) && diceValueCounts.includes(2)) {
+      this.totalScore += 25;
+    }
     //checking for 4 of a kind
     else if (diceValueCounts.includes(4)) {
       this.totalScore += this.sumOfRolledDie(dice);
     }
-
-    let maxCount = 0;
-    let maxCountIndex = -1;
-    for (let i = 0; i < diceValueCounts.length; i++) {
-      if (diceValueCounts[i] > maxCount) {
-        maxCount = diceValueCounts[i];
-        maxCountIndex = i;
-      }
+    // checking for 3 of a kind
+    else if (diceValueCounts.includes(3)) {
+      this.totalScore += this.sumOfRolledDie(dice);
     }
-    this.totalScore = maxCountIndex * maxCount;
+    // checking for maximum of base cases (ones, twos, threes, etc.)
+    else {
+      let maxCount = 0;
+      let maxCountIndex = -1;
+      for (let i = 0; i < diceValueCounts.length; i++) {
+        if (diceValueCounts[i] > maxCount) {
+          maxCount = diceValueCounts[i];
+          maxCountIndex = i;
+        }
+      }
+      this.totalScore = maxCountIndex * maxCount;
+    }
+
   }
 
   score(): number {
