@@ -42,17 +42,35 @@ export interface CategoryScorer {
   score: (roll: number[]) => CategoryScores
 }
 
-class YahtzeeChooser implements Chooser {
+export class YahtzeeChooser implements Chooser {
   choose(categories): number {
     return 0
   }
 }
 
-class YahtzeeCategoryScorer implements CategoryScorer {
+export class YahtzeeCategoryScorer implements CategoryScorer {
+
+  currentRoll: number[]
+
   score(roll): CategoryScores {
+    this.currentRoll = roll
     return {
-      ones: 0,
-      twos: 0
+      ones: this.sumOfOnes(),
+      twos: this.sumOfTwos()
     }
+  }
+
+  sumOfOnes() {
+    return this.sumOfNumber(1)
+  }
+
+  sumOfTwos() {
+    return this.sumOfNumber(2)
+  }
+
+  private sumOfNumber(num: number): number {
+    return this.currentRoll
+      .filter((val) => val === num)
+      .reduce((partial, acc) => partial + acc, 0);
   }
 }
