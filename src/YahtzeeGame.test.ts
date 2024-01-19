@@ -1,8 +1,13 @@
 import { YahtzeeGame } from "./YahtzeeGame";
 
 describe("Yahtzee Game", () => {
+  let game;
+
+  beforeEach(() => {
+    game = new YahtzeeGame()
+  })
   it("starts with score 0", () => {
-    expect(new YahtzeeGame().score()).toEqual(0);
+    expect(game.score()).toEqual(0);
   });
 
   // it("roll ones and score adds the sum of 1s", () => {
@@ -12,13 +17,12 @@ describe("Yahtzee Game", () => {
   // });
 
   it("scores yahtzee properly on round 1", () => {
-    const game = new YahtzeeGame();
+
     game.roll([1, 1, 1, 1, 1]);
     expect(game.score()).toEqual(50);
   });
 
   it("doesn't score a yahtzee if a yahtzee wasn't rolled", () => {
-    const game = new YahtzeeGame();
     game.roll([1, 3, 1, 1, 1]);
     expect(game.score()).not.toEqual(50);
   });
@@ -49,11 +53,18 @@ describe("Yahtzee Game", () => {
 
   // REMINDER: TEST STRAIGHTS THAT CAN BE BIG OR SMALL DEPENDING ON WHATS TAKEN
 
-  it("scores full house properly on round 1", () => {
-    const game1 = new YahtzeeGame();
-    game1.roll([1,1,2,2,2]);
-    expect(game1.score()).toEqual(25);
-
+  it.each([
+    [[1,1,2,2,2]],
+    [[3,5,5,3,5]]
+  ])
+  ("scores full house properly on round 1", (diceValues) => {
+    game.roll(diceValues);
+    expect(game.score()).toEqual(25);
   });
+
+  it("scores four of kind properly on round 1", () => {
+    game.roll([3,3,3,3,1]);
+    expect(game.score()).toEqual(13);
+  })
   // testing
 });
