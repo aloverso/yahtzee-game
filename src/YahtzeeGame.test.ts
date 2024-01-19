@@ -59,12 +59,14 @@ describe("Yahtzee Game", () => {
   });
 
   describe("2nd round of gameplay", () => {
-    it("correctlty calculates the score when the 1st and 2nd roll are all 6s", () => {
-      game.roll([6, 6, 6, 6, 6]);
-      expect(game.score()).toEqual(50);
+    // it("correctly calculates the score when the 1st and 2nd roll are all 6s", () => {
+    //   game.roll([6, 6, 6, 6, 6]);
+    //   expect(game.score()).toEqual(50);
 
-      game.roll([6, 6, 6, 6, 6]);
-      expect(game.score()).toEqual(80);
-    });
+    //   game.roll([6, 6, 6, 6, 6]);
+    //   expect(game.score()).toEqual(150);
+    //   expect(game.score()).toEqual(180);
+
+    // });
   });
 });

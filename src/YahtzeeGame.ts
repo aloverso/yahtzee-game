@@ -1,4 +1,4 @@
-type ScoreCard = {
+interface ScoreCard {
   ones: number | undefined;
   twos: number | undefined;
   threes: number | undefined;
@@ -12,7 +12,7 @@ type ScoreCard = {
   largeStraight: number | undefined;
   yahtzee: number | undefined;
   chance: number | undefined;
-};
+}
 
 export class YahtzeeGame {
   private runningScore: number;
@@ -20,19 +20,34 @@ export class YahtzeeGame {
 
   constructor() {
     this.runningScore = 0;
+    this.scoreCard = {
+      ones: undefined,
+      twos: undefined,
+      threes: undefined,
+      fours: undefined,
+      fives: undefined,
+      sixes: undefined,
+      threeOfAKind: undefined,
+      fourOfAKind: undefined,
+      fullHouse: undefined,
+      smallStraight: undefined,
+      largeStraight: undefined,
+      yahtzee: undefined,
+      chance: undefined,
+    };
   }
 
   roll(round: number[]): void {
     if (this.scoreCard.yahtzee === undefined && this.isYahtzee(round)) {
-      this.scoreCard.yahtzee = 50;
+      this.scoreCard.yahtzee += 50;
     } else if (this.isLargeStraight(round)) {
-      this.runningScore += 40;
+      this.scoreCard.largeStraight += 40;
     } else if (this.isShortStraight(round)) {
-      this.runningScore += 30;
+      this.scoreCard.smallStraight += 30;
     } else if (this.isFourOfAKind(round)) {
-      this.runningScore += this.getSumOfRound(round);
+      this.scoreCard.fourOfAKind += this.getSumOfRound(round);
     } else if (this.isThreeOfAKind(round)) {
-      this.runningScore += this.getSumOfRound(round);
+      this.scoreCard.threeOfAKind += this.getSumOfRound(round);
     } else {
       this.runningScore += this.getSumOfMostFrequentFace(round);
     }
@@ -61,6 +76,9 @@ export class YahtzeeGame {
 
   private isYahtzee(round: number[]): boolean {
     return round.every((num) => {
+      console.log({num})
+      console.log(round[0])
+      console.log(num === round[0])
       return num === round[0];
     });
   }
