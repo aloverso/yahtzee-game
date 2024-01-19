@@ -84,7 +84,7 @@ describe("Yahtzee Game", () => {
       })
     });
 
-    describe("sum of three of a kind", () => {
+    describe("score of three of a kind", () => {
       it.each(
           [
               [[1, 3, 3, 3, 6], 16],
@@ -94,7 +94,51 @@ describe("Yahtzee Game", () => {
           ]
       )("score matches expected val", (diceValues, expectedSum) => {
         const categories = new Categories(diceValues);
-        expect(categories.sumOfThreeOfAKind()).toEqual(expectedSum);
+        expect(categories.scoreOfThreeOfAKind()).toEqual(expectedSum);
+      })
+    });
+
+    describe("score of four of a kind", () => {
+      it.each(
+        [
+          [[1, 3, 3, 3, 6], 0],
+          [[2, 4, 4, 4, 4], 18],
+          [[5, 5, 5, 5, 5], 25],
+          [[1, 5, 5, 3, 4], 0],
+        ]
+      )("score matches expected val", (diceValues, expectedSum) => {
+        const categories = new Categories(diceValues);
+        expect(categories.scoreOfFourOfAKind()).toEqual(expectedSum);
+      })
+    });
+
+    describe("score of full house", () => {
+      it.each(
+        [
+          [[6, 3, 3, 3, 6], 25],
+          [[1, 4, 4, 4, 1], 25],
+          [[2, 4, 4, 4, 4], 0],
+          [[5, 5, 5, 5, 5], 0],
+          [[1, 5, 5, 3, 4], 0],
+        ]
+      )("score matches expected val", (diceValues, expectedSum) => {
+        const categories = new Categories(diceValues);
+        expect(categories.scoreFullHouse()).toEqual(expectedSum);
+      })
+    });
+
+    describe("score of small straight", () => {
+      it.each(
+        [
+          [[1, 3, 2, 6, 4], 30],
+          [[1, 2, 3, 4, 5], 30],
+          [[2, 3, 4, 5, 4], 30],
+          [[5, 5, 5, 5, 5], 0],
+          [[1, 5, 5, 3, 4], 0],
+        ]
+      )("score matches expected val", (diceValues, expectedSum) => {
+        const categories = new Categories(diceValues);
+        expect(categories.scoreSmallStraight()).toEqual(expectedSum);
       })
     });
   });
