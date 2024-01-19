@@ -34,15 +34,42 @@ export class YahtzeeGame {
   }
 
   roll(round: number[]): void {
-    this.ScoreCard.ones = 3;
+    if (this.isYahtzee(round)) {
+      this.ScoreCard.yahtzee = 50;
+    }
 
-    const isYahtzee = this.isYahtzee(round);
+    if (this.isLargeStraight(round)) {
+      this.ScoreCard.largeStraight = 40;
+    }
+
+    if (this.isSmallStraight(round)) {
+      this.ScoreCard.smallStraight = 30;
+    }
   }
 
   private isYahtzee(round: number[]): boolean {
     return round.every((num) => {
-      num === round[0];
+      return num === round[0];
     });
+  }
+
+  private isLargeStraight(round: number[]): boolean {
+    return (round.includes(2) && round.includes(3) && round.includes(4) && round.includes(5))
+        && (round.includes(1) || round.includes(6))
+  }
+
+  private isSmallStraight(round: number[]): boolean {
+    return (round.includes(3) && round.includes(4))
+        &&
+        (
+                (round.includes(1) && round.includes(2))
+            ||  (round.includes(2) && round.includes(5))
+            ||  (round.includes(5) && round.includes(6))
+        )
+  }
+
+  private isFullHouse(round: number[]): boolean {
+    return false
   }
 
   score(): number {
