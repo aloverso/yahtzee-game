@@ -5,13 +5,21 @@ export class YahtzeeGame {
     this.totalScore = 0;
   }
 
-  roll(dice1, dice2, dice3, dice4, dice5): void {}
+  roll(diceValues: number[]): void {
+    this.sumOfOnes(diceValues);
+  }
 
   score(): number {
     return this.totalScore;
   }
 
-  sumOfOnes(dice1, dice2, dice3, dice4, dice5): void {
-    let result;
+  private sumOfOnes(diceValues: number[]): void {
+    const score = diceValues.
+      filter((val) => val === 1).
+      reduce((partial, acc) => partial + acc, 0);
+    this.totalScore += score;
   }
+
 }
+
+
