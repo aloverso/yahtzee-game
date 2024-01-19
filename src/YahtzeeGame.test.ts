@@ -16,8 +16,13 @@ describe("Yahtzee Game", () => {
     expect(game.score()).toEqual(15);
   });
 
-  it("scores a roll as 4 of a kind and increments the score by 40", () => {
+  it("scores a roll as two fives and increments the score by 10", () => {
+    game.roll([5, 5, 4, 2, 2]);
+    expect(game.score()).toEqual(10);
+  });
+
+  it("scores a roll as 4 of a kind and increments the score by 22", () => {
     game.roll([5, 5, 5, 5, 2]);
-    expect(game.score()).toEqual(20);
+    expect(game.score()).toEqual(22);
   });
 });
