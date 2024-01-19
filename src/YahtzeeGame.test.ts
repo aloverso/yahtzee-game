@@ -25,8 +25,12 @@ describe("Yahtzee Game", () => {
   it("should score 9 with three threes", () => {
     game.roll([3, 3, 3, 5, 5]);
     expect(game.score()).toEqual(9);
-  })
+  });
 
+  it("should score total of all 5 dice 4 of a kind", () => {
+    game.roll([2, 2, 2, 2, 6]);
+    expect(game.score()).toEqual(14);
+  });
 
   it("should score 50 with 5 of a kind", () => {
     game.roll([1, 1, 1, 1, 1]);
