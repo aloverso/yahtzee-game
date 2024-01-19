@@ -1,4 +1,6 @@
-import { YahtzeeGame } from "./YahtzeeGame";
+import { YahtzeeGame, Categories } from "./YahtzeeGame";
+
+const CATEGORIES = new Categories();
 
 describe("Yahtzee Game", () => {
   it("starts with score 0", () => {
@@ -11,28 +13,24 @@ describe("Yahtzee Game", () => {
           [
               [[1, 2, 3, 4, 5], 1],
               [[1, 1, 1, 1, 5], 4],
-              [[]]
+              [[5, 2, 3, 4, 5], 0],
           ]
-      )
-      it("score reflects sum total of dice with 1 value (1)", () => {
-        const game = new YahtzeeGame();
-        game.roll([1, 2, 3, 4, 5]);
-        expect(game.score()).toEqual(1);
-      });
+      )("score matches expected val", (diceValues, expectedSum) => {
+        expect(CATEGORIES.sumOfOnes(diceValues)).toEqual(expectedSum);
+      })
+    });
 
-      it("score reflects sum total of dice with 1 value (4)", () => {
-        const game = new YahtzeeGame();
-        game.roll([1, 1, 1, 1, 5]);
-        expect(game.score()).toEqual(4);
-      });
-
-      it("score is 0 when roll does not contain 1", () => {
-        const game = new YahtzeeGame();
-        game.roll([5, 2, 3, 4, 5]);
-        expect(game.score()).toEqual(0);
-      });
-
-
+    describe("sum of 2s", () => {
+      it.each(
+          [
+              [[1, 2, 3, 4, 5], 2],
+              [[2, 2, 2, 2, 5], 8],
+              [[5, 1, 3, 4, 5], 0],
+          ]
+      )("score matches expected val", (diceValues, expectedSum) => {
+        expect(CATEGORIES.sumOfTwos(diceValues)).toEqual(expectedSum);
+      })
     });
   });
 });
+
