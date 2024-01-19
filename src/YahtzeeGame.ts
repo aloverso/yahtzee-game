@@ -28,6 +28,13 @@ export class YahtzeeGame {
       }
     }
     // [-, 1, 2, 0, 1, 1 ]
+    // {0: -1, 1: 1, 2: 2, 3: 0, 4: 1, 5: 1, 6: 0}
+    console.log(diceValueCounts)
+    if(diceValueCounts.includes(5)) {
+      this.totalScore += 50;
+      return;
+    }
+
     let maxCount = 0
     let maxCountIndex = -1
     for (let i = 0; i < diceValueCounts.length; i++) {
