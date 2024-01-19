@@ -1,7 +1,24 @@
-import { YahtzeeGame } from './YahtzeeGame'
+import { YahtzeeGame } from "./YahtzeeGame";
 
-describe('Yahtzee Game', () => {
-  it('starts with score 0', () => {
-    expect(new YahtzeeGame().score()).toEqual(0)
-  })
-})
+describe("Yahtzee Game", () => {
+  let game: YahtzeeGame;
+
+  beforeEach(() => {
+    game = new YahtzeeGame();
+  });
+
+  it("starts with score 0", () => {
+    expect(game.score()).toEqual(0);
+  });
+
+  it("should score 2 with two ones", () => {
+    game.roll([1, 1, 3, 4, 5]);
+
+    expect(game.score()).toEqual(2);
+  });
+
+  it("should score 4 with two twos", () => {
+    game.roll([2, 2, 4, 1, 5]);
+    expect(game.score()).toEqual(4);
+  });
+});
