@@ -4,13 +4,13 @@ describe("Yahtzee Game", () => {
   let game;
   beforeEach(() => {
     game = new YahtzeeGame();
-  })
+  });
 
   it("starts with score 0", () => {
     expect(new YahtzeeGame().score()).toEqual(0);
   });
 
-  describe("first round of gameplay", ()=>{
+  describe("1st round of gameplay", () => {
     it("correctly calculates the score for a yahtzee of 6s on first round", () => {
       game.roll([6, 6, 6, 6, 6]);
       expect(game.score()).toEqual(50);
@@ -50,11 +50,21 @@ describe("Yahtzee Game", () => {
     it("correctly calculates the score for 6s on the first round", () => {
       game.roll([6, 6, 5, 4, 1]);
       expect(game.score()).toEqual(12);
-    })
+    });
 
     it("correctly calculates the score for 5s on the first round", () => {
       game.roll([6, 5, 5, 4, 4]);
       expect(game.score()).toEqual(10);
-    })
+    });
+  });
+
+  describe("2nd round of gameplay", () => {
+    it("correctlty calculates the score when the 1st and 2nd roll are all 6s", () => {
+      game.roll([6, 6, 6, 6, 6]);
+      expect(game.score()).toEqual(50);
+
+      game.roll([6, 6, 6, 6, 6]);
+      expect(game.score()).toEqual(80);
+    });
   });
 });
