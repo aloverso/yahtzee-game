@@ -141,6 +141,48 @@ describe("Yahtzee Game", () => {
         expect(categories.scoreSmallStraight()).toEqual(expectedSum);
       })
     });
+
+      describe("score of large straight", () => {
+          it.each(
+              [
+                  [[1, 3, 2, 6, 4], 0],
+                  [[1, 2, 3, 4, 5], 40],
+                  [[6, 2, 3, 4, 5], 40],
+                  [[2, 3, 4, 5, 4], 0],
+                  [[5, 5, 5, 5, 5], 0],
+                  [[1, 5, 5, 3, 4], 0],
+              ]
+          )("score matches expected val", (diceValues, expectedSum) => {
+              const categories = new Categories(diceValues);
+              expect(categories.scoreLargeStraight()).toEqual(expectedSum);
+          })
+      });
+
+      describe("score of yahtzee", () => {
+          it.each(
+              [
+                  [[1, 1, 1, 1, 1], 50],
+                  [[4, 4, 4, 4, 4], 50],
+                  [[2, 3, 4, 5, 4], 0],
+                  [[5, 5, 5, 5, 1], 0],
+                  [[1, 5, 5, 3, 4], 0],
+              ]
+          )("score matches expected val", (diceValues, expectedSum) => {
+              const categories = new Categories(diceValues);
+              expect(categories.scoreYahtzee()).toEqual(expectedSum);
+          })
+      });
+
+      describe("chance", () => {
+          it.each(
+              [
+                  [[5, 5, 5, 5, 1], 21],
+              ]
+          )("score matches expected val", (diceValues, expectedSum) => {
+              const categories = new Categories(diceValues);
+              expect(categories.scoreChance()).toEqual(expectedSum);
+          })
+      });
   });
 });
 
