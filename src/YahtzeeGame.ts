@@ -33,6 +33,25 @@ interface PossibleCategories {
   chance: boolean;
 }
 
+type ScoreCategory =
+  | "ones"
+  | "twos"
+  | "threes"
+  | "fours"
+  | "fives"
+  | "sixes"
+  | "threeOfAKind"
+  | "fourOfAKind"
+  | "fullHouse"
+  | "smallStraight"
+  | "largeStraight"
+  | "yahtzee"
+  | "chance";
+
+interface ScoreSheet {
+  [key: string]: number | null;
+}
+
 export class YahtzeeGame {
   runningScore: number;
 
@@ -41,7 +60,7 @@ export class YahtzeeGame {
   }
 
   roll(roll: Roll): void {
-    this.runningScore = 1;
+    this.runningScore = 50;
   }
 
   score(): number {
@@ -51,31 +70,41 @@ export class YahtzeeGame {
 
 /* takes a roll, determines all possible categories */
 export const possibleCategories = (roll: Roll): PossibleCategories => {
-
-  const hasXOfAKind = (x: number, rolls: Roll): boolean => Object.values(rolls).some((value) => value >= x)
+  const hasXOfAKind = (x: number, rolls: Roll): boolean =>
+    Object.values(rolls).some((value) => value >= x);
 
   const hasFullHouse = () => {
-    const threeOfAKindDice = Object.keys(roll).find((key) => roll[key] >= 3)
+    const threeOfAKindDice = Object.keys(roll).find((key) => roll[key] >= 3);
     if (!threeOfAKindDice) return false;
-    const rollWithoutThreeOfAKindDice = { ...roll, [threeOfAKindDice]: 0 }
-    return hasXOfAKind(2, rollWithoutThreeOfAKindDice)
-  }
+    const rollWithoutThreeOfAKindDice = { ...roll, [threeOfAKindDice]: 0 };
+    return hasXOfAKind(2, rollWithoutThreeOfAKindDice);
+  };
 
   const hasSmallStraight = () => {
     if (roll.ones > 0) {
-      return (roll.twos > 0 && roll.threes > 0 && roll.fours > 0)
+      return roll.twos > 0 && roll.threes > 0 && roll.fours > 0;
     } else if (roll.twos > 0) {
-      return (roll.threes > 0 && roll.fours > 0 && roll.fives > 0)
+      return roll.threes > 0 && roll.fours > 0 && roll.fives > 0;
     }
-    return roll.threes > 0 && roll.fours > 0 && roll.fives >0 && roll.sixes > 0
-  }
+    return (
+      roll.threes > 0 && roll.fours > 0 && roll.fives > 0 && roll.sixes > 0
+    );
+  };
 
   const hasLargeStraight = () => {
     if (roll.ones > 0) {
-      return (roll.twos > 0 && roll.threes > 0 && roll.fours > 0 && roll.fives > 0)
+      return (
+        roll.twos > 0 && roll.threes > 0 && roll.fours > 0 && roll.fives > 0
+      );
     }
-    return roll.twos > 0 && roll.threes > 0 && roll.fours > 0 && roll.fives >0 && roll.sixes > 0
-  }
+    return (
+      roll.twos > 0 &&
+      roll.threes > 0 &&
+      roll.fours > 0 &&
+      roll.fives > 0 &&
+      roll.sixes > 0
+    );
+  };
 
   return {
     ones: roll.ones > 0,
@@ -89,7 +118,7 @@ export const possibleCategories = (roll: Roll): PossibleCategories => {
     fullHouse: hasFullHouse(),
     smallStraight: hasSmallStraight(),
     largeStraight: hasLargeStraight(),
-    yahtzee: false,
-    chance: false,
+    yahtzee: hasXOfAKind(5, roll),
+    chance: true,
   };
 };
