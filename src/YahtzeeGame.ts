@@ -15,7 +15,32 @@ export class YahtzeeGame {
       this.runningScore += 30;
     } else if (this.isFourOfAKind(round)) {
       this.runningScore += this.getSumOfRound(round);
+    } else if (this.isThreeOfAKind(round)) {
+      this.runningScore += this.getSumOfRound(round);
+    } else {
+      this.runningScore += this.getSumOfMostFrequentFace(round)
     }
+  }
+
+  private getDieFaceCount(round: number[]): number[] {
+    // making index[0] -1, so 1-6 align with die face number
+    let dieFaces = [-1, 0, 0, 0, 0, 0, 0];
+    // roll: [2, 2, 2, 1, 2]
+    // dieFaces: [-1, 1, 4, 0 , 0, 0, 0 ]
+    round.forEach((die) => {
+      dieFaces[die] += 1;
+    })
+
+    return dieFaces;
+  }
+
+  private getSumOfRound(round: number[]): number {
+    let roundSum = 0;
+    round.forEach((die) => {
+      roundSum += die;
+    });
+
+    return roundSum;
   }
 
   private isYahtzee(round: number[]): boolean {
@@ -47,30 +72,29 @@ export class YahtzeeGame {
     );
   }
 
-  private getDieFaceCount(round: number[]): number[] {
-    // making index[0] -1, so 1-6 align with die face number
-    let dieFaces = [-1, 0, 0, 0, 0, 0, 0];
-    round.every((die) => {
-      console.log(die);
-      dieFaces[die] += 1;
-    });
-
-    return dieFaces;
-  }
-
-  private getSumOfRound(round: number[]): number {
-    let roundSum = 0;
-    round.every((die) => {
-      roundSum += die;
-    });
-
-    return roundSum;
-  }
-
   private isFourOfAKind(round: number[]): boolean {
     let dieFaceCount = this.getDieFaceCount(round);
-    console.log(dieFaceCount);
     return dieFaceCount.includes(4);
+  }
+
+  private isThreeOfAKind(round: number[]): boolean {
+    let dieFaceCount = this.getDieFaceCount(round);
+    return dieFaceCount.includes(3);
+  }
+
+  private getSumOfMostFrequentFace(round: number[]): number {
+    const dieFaces = this.getDieFaceCount(round)
+    let maxCount = 0
+    let maxCountIndex = -1
+
+    for (let i = 1; i < dieFaces.length; i++){
+      if(dieFaces[i] >= maxCount){
+        maxCount = dieFaces[i]
+        maxCountIndex = i
+      }
+    }
+
+    return maxCount * maxCountIndex
   }
 
   score(): number {
