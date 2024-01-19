@@ -9,14 +9,12 @@ export class YahtzeeGame {
   roll(round: number[]): void {
     if (this.isYahtzee(round)) {
       this.runningScore += 50;
-    }
-
-    if (this.isLargeStraight(round)) {
+    } else if (this.isLargeStraight(round)) {
       this.runningScore += 40;
-    }
-
-    if (this.isShortStraight(round)) {
+    } else if (this.isShortStraight(round)) {
       this.runningScore += 30;
+    } else if (this.isFourOfAKind(round)) {
+      this.runningScore += this.getSumOfRound(round);
     }
   }
 
@@ -49,8 +47,30 @@ export class YahtzeeGame {
     );
   }
 
+  private getDieFaceCount(round: number[]): number[] {
+    // making index[0] -1, so 1-6 align with die face number
+    let dieFaces = [-1, 0, 0, 0, 0, 0, 0];
+    round.every((die) => {
+      console.log(die);
+      dieFaces[die] += 1;
+    });
+
+    return dieFaces;
+  }
+
+  private getSumOfRound(round: number[]): number {
+    let roundSum = 0;
+    round.every((die) => {
+      roundSum += die;
+    });
+
+    return roundSum;
+  }
+
   private isFourOfAKind(round: number[]): boolean {
-    return false;
+    let dieFaceCount = this.getDieFaceCount(round);
+    console.log(dieFaceCount);
+    return dieFaceCount.includes(4);
   }
 
   score(): number {

@@ -41,6 +41,6 @@ describe("Yahtzee Game", () => {
     const game = new YahtzeeGame();
 
     game.roll([4, 4, 4, 4, 1]);
-    expect(game.score()).toEqual(40);
+    expect(game.score()).toEqual(17);
   });
 });
