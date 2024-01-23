@@ -115,6 +115,83 @@ describe('YahtzeeCategoryScorer', () => {
     })
   });
 
+  describe("score of full house", () => {
+    it.each(
+      [
+        [[6, 3, 3, 3, 6], 25],
+        [[1, 4, 4, 4, 1], 25],
+        [[2, 4, 4, 4, 4], 0],
+        [[5, 5, 5, 5, 5], 0],
+        [[1, 5, 5, 3, 4], 0],
+      ]
+    )("score matches expected val", (diceValues, expectedSum) => {
+      const categoryScorer = new YahtzeeCategoryScorer();
+      categoryScorer.score(diceValues)
+      expect(categoryScorer.scoreFullHouse()).toEqual(expectedSum);
+    })
+  });
+
+  describe("score of small straight", () => {
+    it.each(
+      [
+        [[1, 3, 2, 6, 4], 30],
+        [[1, 2, 3, 4, 5], 30],
+        [[2, 3, 4, 5, 4], 30],
+        [[5, 5, 5, 5, 5], 0],
+        [[1, 5, 5, 3, 4], 0],
+      ]
+    )("score matches expected val", (diceValues, expectedSum) => {
+      const categoryScorer = new YahtzeeCategoryScorer();
+      categoryScorer.score(diceValues)
+      expect(categoryScorer.scoreSmallStraight()).toEqual(expectedSum);
+    })
+  });
+
+  describe("score of large straight", () => {
+    it.each(
+      [
+        [[1, 3, 2, 6, 4], 0],
+        [[1, 2, 3, 4, 5], 40],
+        [[6, 2, 3, 4, 5], 40],
+        [[2, 3, 4, 5, 4], 0],
+        [[5, 5, 5, 5, 5], 0],
+        [[1, 5, 5, 3, 4], 0],
+      ]
+    )("score matches expected val", (diceValues, expectedSum) => {
+      const categoryScorer = new YahtzeeCategoryScorer();
+      categoryScorer.score(diceValues)
+      expect(categoryScorer.scoreLargeStraight()).toEqual(expectedSum);
+    })
+  });
+
+  describe("score of yahtzee", () => {
+    it.each(
+      [
+        [[1, 1, 1, 1, 1], 50],
+        [[4, 4, 4, 4, 4], 50],
+        [[2, 3, 4, 5, 4], 0],
+        [[5, 5, 5, 5, 1], 0],
+        [[1, 5, 5, 3, 4], 0],
+      ]
+    )("score matches expected val", (diceValues, expectedSum) => {
+      const categoryScorer = new YahtzeeCategoryScorer();
+      categoryScorer.score(diceValues)
+      expect(categoryScorer.scoreYahtzee()).toEqual(expectedSum);
+    })
+  });
+
+  describe("chance", () => {
+    it.each(
+      [
+        [[5, 5, 5, 5, 1], 21],
+      ]
+    )("score matches expected val", (diceValues, expectedSum) => {
+      const categoryScorer = new YahtzeeCategoryScorer();
+      categoryScorer.score(diceValues)
+      expect(categoryScorer.scoreChance()).toEqual(expectedSum);
+    })
+  });
+
   it('returns entire categoryScore', () => {
     const categoryScorer = new YahtzeeCategoryScorer();
     expect(categoryScorer.score([1, 2, 3, 4, 5])).toEqual({
@@ -126,6 +203,11 @@ describe('YahtzeeCategoryScorer', () => {
       sixes: 0,
       threeOfAKind: 0,
       fourOfAKind: 0,
+      fullHouse: 0,
+      smallStraight: 30,
+      largeStraight: 40,
+      yahtzee: 0,
+      chance: 15,
     })
 
     expect(categoryScorer.score([6,6,6,6,1])).toEqual({
@@ -137,6 +219,43 @@ describe('YahtzeeCategoryScorer', () => {
       sixes: 24,
       threeOfAKind: 25,
       fourOfAKind: 25,
+      fullHouse: 0,
+      smallStraight: 0,
+      largeStraight: 0,
+      yahtzee: 0,
+      chance: 25,
+    })
+
+    expect(categoryScorer.score([6,6,6,6,6])).toEqual({
+      ones: 0,
+      twos: 0,
+      threes: 0,
+      fours: 0,
+      fives: 0,
+      sixes: 30,
+      threeOfAKind: 30,
+      fourOfAKind: 30,
+      fullHouse: 0,
+      smallStraight: 0,
+      largeStraight: 0,
+      yahtzee: 50,
+      chance: 30,
+    })
+
+    expect(categoryScorer.score([6,6,6,2,2])).toEqual({
+      ones: 0,
+      twos: 4,
+      threes: 0,
+      fours: 0,
+      fives: 0,
+      sixes: 18,
+      threeOfAKind: 22,
+      fourOfAKind: 0,
+      fullHouse: 25,
+      smallStraight: 0,
+      largeStraight: 0,
+      yahtzee: 0,
+      chance: 22,
     })
   })
 })

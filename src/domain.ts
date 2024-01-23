@@ -16,4 +16,9 @@ export type CategoryScores = {
   sixes: number;
   threeOfAKind: number;
   fourOfAKind: number;
+  fullHouse: number;
+  smallStraight: number;
+  largeStraight: number;
+  yahtzee: number;
+  chance: number;
 }

@@ -39,6 +39,11 @@ export const generateCategoryScores = (overrides: Partial<CategoryScores>): Cate
     sixes: 0,
     threeOfAKind: 0,
     fourOfAKind: 0,
+    fullHouse: 0,
+    smallStraight: 0,
+    largeStraight: 0,
+    yahtzee: 0,
+    chance: 0,
     ...overrides
   }
 }

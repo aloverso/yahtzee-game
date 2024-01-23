@@ -36,7 +36,12 @@ export class YahtzeeCategoryScorer implements CategoryScorer {
       fives: this.sumOfFives(),
       sixes: this.sumOfSixes(),
       threeOfAKind: this.scoreOfThreeOfAKind(),
-      fourOfAKind: this.scoreOfFourOfAKind()
+      fourOfAKind: this.scoreOfFourOfAKind(),
+      fullHouse: this.scoreFullHouse(),
+      smallStraight: this.scoreSmallStraight(),
+      largeStraight: this.scoreLargeStraight(),
+      yahtzee: this.scoreYahtzee(),
+      chance: this.scoreChance(),
     }
   }
 
@@ -74,6 +79,56 @@ export class YahtzeeCategoryScorer implements CategoryScorer {
     return hasFourOfAKind ? this.sumAll() : 0;
   }
 
+  scoreFullHouse(): number {
+    let twoOfAKindFound = false;
+    let threeOfAKindFound = false;
+    for (const val of Object.values(this.histogram)) {
+      if (val === 2) {
+        twoOfAKindFound = true;
+      } else if (val === 3) {
+        threeOfAKindFound = true;
+      }
+    }
+
+    const hasFullHouse = twoOfAKindFound && threeOfAKindFound;
+    return hasFullHouse ? 25 : 0;
+  }
+
+  scoreSmallStraight(): number {
+    let isSmallStraight = false;
+    if (this.histogram["3"] > 0 && this.histogram["4"] > 0) {
+      if (this.histogram["1"] > 0) {
+        isSmallStraight = this.histogram["2"] > 0;
+      } else if (this.histogram["2"] > 0) {
+        isSmallStraight = this.histogram["5"] > 0;
+      } else if (this.histogram["5"] > 0) {
+        isSmallStraight = this.histogram["6"] > 0;
+      }
+    }
+    return isSmallStraight ? 30 : 0;
+  }
+
+  scoreLargeStraight(): number {
+    let isLargeStraight = false;
+    if (
+      this.histogram["2"] > 0 &&
+      this.histogram["3"] > 0 &&
+      this.histogram["4"] > 0 &&
+      this.histogram["5"] > 0
+    ) {
+      isLargeStraight = this.histogram["1"] > 0 || this.histogram["6"] > 0;
+    }
+    return isLargeStraight ? 40 : 0;
+  }
+
+  scoreYahtzee(): number {
+    const isYahtzee = this.hasXOfAKind(5);
+    return isYahtzee ? 50 : 0;
+  }
+
+  scoreChance(): number {
+    return this.sumAll();
+  }
 
   private hasXOfAKind(x: number): boolean {
     return Object.values(this.histogram).some((it) => it >= x);

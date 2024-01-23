@@ -44,9 +44,9 @@ describe('Yahtzee Game', () => {
     const realCategoryScorer = new YahtzeeCategoryScorer()
     const game = new YahtzeeGame(realCategoryScorer, realChooser);
     game.roll([1,2,2,1,5])
-    expect(game.score()).toEqual(5) // score fives
+    expect(game.score()).toEqual(11) // score chance
     game.roll([1,2,2,1,5])
-    expect(game.score()).toEqual(9) // score twos
+    expect(game.score()).toEqual(16) // score fives
   })
 })
 
