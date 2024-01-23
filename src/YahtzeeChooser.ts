@@ -2,16 +2,16 @@ import {CategoryScores, Chooser} from "./domain";
 
 export class YahtzeeChooser implements Chooser {
 
-  chosenCategories: string[]
+  scorecard: Scorecard
 
   constructor() {
-    this.chosenCategories = []
+    this.scorecard = new Scorecard()
   }
 
   choose(categoryScores: CategoryScores): number {
     const remainingCategories: Partial<CategoryScores> = {}
     for (const key of Object.keys(categoryScores)) {
-      if (!this.chosenCategories.includes(key)) {
+      if (!this.scorecard.isAlreadyChosen(key)) {
         remainingCategories[key] = categoryScores[key]
       }
     }
@@ -24,7 +24,23 @@ export class YahtzeeChooser implements Chooser {
       }
     }
 
-    this.chosenCategories.push(maxCategory)
+    this.scorecard.scoreCategory(maxCategory)
     return max
+  }
+}
+
+class Scorecard {
+  chosenCategories: string[]
+
+  constructor() {
+    this.chosenCategories = []
+  }
+
+  isAlreadyChosen(category: string): boolean {
+    return this.chosenCategories.includes(category)
+  }
+
+  scoreCategory(category: string): void {
+    this.chosenCategories.push(category)
   }
 }
