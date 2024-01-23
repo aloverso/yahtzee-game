@@ -15,4 +15,14 @@ describe('YahtzeeChooser', () => {
     expect(chooser.choose(scores)).toEqual(2)
     expect(chooser.choose(scores)).toEqual(1)
   })
+
+  it('marks yahtzee bonus when it cannot choose a second yahtzee', () => {
+    const scorecard = new Scorecard()
+    const chooser = new YahtzeeChooser(scorecard);
+    const scores = generateCategoryScores({ ones: 1, twos: 2, yahtzee: 30 })
+    expect(chooser.choose(scores)).toEqual(30)
+    expect(scorecard.hasYahtzeeBonus()).toEqual(false)
+    expect(chooser.choose(scores)).toEqual(2)
+    expect(scorecard.hasYahtzeeBonus()).toEqual(true)
+  })
 })

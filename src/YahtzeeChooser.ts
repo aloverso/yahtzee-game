@@ -10,12 +10,17 @@ export class YahtzeeChooser implements Chooser {
   }
 
   choose(categoryScores: CategoryScores): number {
+    if (categoryScores.yahtzee > 0 && this.scorecard.isAlreadyChosen('yahtzee')) {
+      this.scorecard.markYahtzeeBonus()
+    }
+
     const remainingCategories: Partial<CategoryScores> = {}
     for (const key of Object.keys(categoryScores)) {
       if (!this.scorecard.isAlreadyChosen(key)) {
         remainingCategories[key] = categoryScores[key]
       }
     }
+    
     let max = -1;
     let maxCategory = ''
     for (const category of Object.keys(remainingCategories)) {
