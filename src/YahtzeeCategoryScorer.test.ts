@@ -85,6 +85,36 @@ describe('YahtzeeCategoryScorer', () => {
     })
   });
 
+  describe("score of three of a kind", () => {
+    it.each(
+      [
+        [[1, 3, 3, 3, 6], 16],
+        [[2, 4, 4, 4, 4], 18],
+        [[5, 5, 5, 5, 5], 25],
+        [[1, 5, 5, 3, 4], 0],
+      ]
+    )("score matches expected val", (diceValues, expectedSum) => {
+      const categoryScorer = new YahtzeeCategoryScorer();
+      categoryScorer.score(diceValues)
+      expect(categoryScorer.scoreOfThreeOfAKind()).toEqual(expectedSum);
+    })
+  });
+
+  describe("score of four of a kind", () => {
+    it.each(
+      [
+        [[1, 3, 3, 3, 6], 0],
+        [[2, 4, 4, 4, 4], 18],
+        [[5, 5, 5, 5, 5], 25],
+        [[1, 5, 5, 3, 4], 0],
+      ]
+    )("score matches expected val", (diceValues, expectedSum) => {
+      const categoryScorer = new YahtzeeCategoryScorer();
+      categoryScorer.score(diceValues)
+      expect(categoryScorer.scoreOfFourOfAKind()).toEqual(expectedSum);
+    })
+  });
+
   it('returns entire categoryScore', () => {
     const categoryScorer = new YahtzeeCategoryScorer();
     expect(categoryScorer.score([1, 2, 3, 4, 5])).toEqual({
@@ -94,6 +124,19 @@ describe('YahtzeeCategoryScorer', () => {
       fours: 4,
       fives: 5,
       sixes: 0,
+      threeOfAKind: 0,
+      fourOfAKind: 0,
+    })
+
+    expect(categoryScorer.score([6,6,6,6,1])).toEqual({
+      ones: 1,
+      twos: 0,
+      threes: 0,
+      fours: 0,
+      fives: 0,
+      sixes: 24,
+      threeOfAKind: 25,
+      fourOfAKind: 25,
     })
   })
 })

@@ -14,4 +14,6 @@ export type CategoryScores = {
   fours: number;
   fives: number;
   sixes: number;
+  threeOfAKind: number;
+  fourOfAKind: number;
 }
