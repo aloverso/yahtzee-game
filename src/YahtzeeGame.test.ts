@@ -1,7 +1,7 @@
 import {YahtzeeGame} from './YahtzeeGame'
 import {YahtzeeChooser} from "./YahtzeeChooser";
 import {YahtzeeCategoryScorer} from "./YahtzeeCategoryScorer";
-import {CategoryScorer, CategoryScores, Chooser} from "./domain";
+import {generateCategoryScores, StubCategoryScorer, StubChooser} from "./test-helpers";
 
 describe('Yahtzee Game', () => {
 
@@ -30,12 +30,13 @@ describe('Yahtzee Game', () => {
 
   it('uses a chooser and a categoryScorer to choose and score a category', () => {
     const game = new YahtzeeGame(categoryScorer, chooser);
-    categoryScorer.setScoreReturn({ ones: 1, twos: 2, threes: 0, fours: 0, fives: 0, sixes: 0 })
+    const scores = generateCategoryScores({ ones: 1, twos: 2 })
+    categoryScorer.setScoreReturn(scores)
     chooser.setChooseReturn(2)
     game.roll([1,2,3,4,5])
     expect(game.score()).toEqual(2)
     expect(categoryScorer.scoreCalledWith).toEqual([1,2,3,4,5])
-    expect(chooser.chooseCalledWith).toEqual({ ones: 1, twos: 2, threes: 0, fours: 0, fives: 0, sixes: 0 })
+    expect(chooser.chooseCalledWith).toEqual(scores)
   })
 
   it('plays a real game', () => {
@@ -49,31 +50,3 @@ describe('Yahtzee Game', () => {
   })
 })
 
-class StubChooser implements Chooser {
-  stubbedValue: number;
-  chooseCalledWith: CategoryScores;
-
-  choose(categoryScores: CategoryScores): number {
-    this.chooseCalledWith = categoryScores
-    return this.stubbedValue
-  }
-
-  setChooseReturn(stub: number): void {
-    this.stubbedValue = stub
-  }
-}
-
-class StubCategoryScorer implements CategoryScorer {
-
-  stubbedValue: CategoryScores;
-  scoreCalledWith: number[];
-
-  score(roll: number[]): CategoryScores {
-    this.scoreCalledWith = roll
-    return this.stubbedValue
-  }
-
-  setScoreReturn(stub: CategoryScores): void {
-    this.stubbedValue = stub
-  }
-}
