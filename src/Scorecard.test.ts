@@ -12,4 +12,11 @@ describe('Scorecard', () => {
     expect(scorecard.isAlreadyChosen('ones')).toEqual(true)
     expect(scorecard.isAlreadyChosen('twos')).toEqual(true)
   })
+
+  it('saves if yahtzee bonus is applicable', () => {
+    const scorecard = new Scorecard()
+    expect(scorecard.hasYahtzeeBonus()).toEqual(false)
+    scorecard.markYahtzeeBonus()
+    expect(scorecard.hasYahtzeeBonus()).toEqual(true)
+  })
 })

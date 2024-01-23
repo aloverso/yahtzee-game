@@ -1,10 +1,12 @@
 import {Category, CategoryScores} from "./domain";
 
 export class Scorecard {
-  chosenCategories: string[]
-  scores: CategoryScores;
+  private chosenCategories: string[]
+  private scores: CategoryScores;
+  private yahtzeeBonus: boolean;
 
   constructor() {
+    this.yahtzeeBonus = false;
     this.chosenCategories = []
     this.scores = {
       ones: 0,
@@ -21,6 +23,14 @@ export class Scorecard {
       yahtzee: 0,
       chance: 0,
     }
+  }
+
+  markYahtzeeBonus(): void {
+    this.yahtzeeBonus = true;
+  }
+
+  hasYahtzeeBonus(): boolean {
+    return this.yahtzeeBonus
   }
 
   isAlreadyChosen(category: Category): boolean {
