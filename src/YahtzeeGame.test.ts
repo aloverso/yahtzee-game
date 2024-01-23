@@ -2,6 +2,7 @@ import {YahtzeeGame} from './YahtzeeGame'
 import {YahtzeeChooser} from "./YahtzeeChooser";
 import {YahtzeeCategoryScorer} from "./YahtzeeCategoryScorer";
 import {generateCategoryScores, StubCategoryScorer, StubChooser} from "./test-helpers";
+import {Scorecard} from "./Scorecard";
 
 describe('Yahtzee Game', () => {
 
@@ -40,7 +41,7 @@ describe('Yahtzee Game', () => {
   })
 
   it('plays a real game', () => {
-    const realChooser = new YahtzeeChooser()
+    const realChooser = new YahtzeeChooser(new Scorecard())
     const realCategoryScorer = new YahtzeeCategoryScorer()
     const game = new YahtzeeGame(realCategoryScorer, realChooser);
     game.roll([1,2,2,1,5])
