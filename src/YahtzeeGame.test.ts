@@ -1,11 +1,7 @@
-import {
-  CategoryScorer,
-  CategoryScores,
-  Chooser,
-  YahtzeeCategoryScorer,
-  YahtzeeChooser,
-  YahtzeeGame
-} from './YahtzeeGame'
+import {YahtzeeGame} from './YahtzeeGame'
+import {YahtzeeChooser} from "./YahtzeeChooser";
+import {YahtzeeCategoryScorer} from "./YahtzeeCategoryScorer";
+import {CategoryScorer, CategoryScores, Chooser} from "./domain";
 
 describe('Yahtzee Game', () => {
 
@@ -50,57 +46,6 @@ describe('Yahtzee Game', () => {
     expect(game.score()).toEqual(4) // score twos
     game.roll([1,2,2,1,5])
     expect(game.score()).toEqual(6) // score ones
-  })
-})
-
-describe('YahtzeeChooser', () => {
-  it('chooses highest score from categories', () => {
-    const chooser = new YahtzeeChooser();
-    expect(chooser.choose({ ones: 1, twos: 2})).toEqual(2)
-  })
-
-  it('chooses highest score from categories not yet chosen', () => {
-    const chooser = new YahtzeeChooser();
-    expect(chooser.choose({ ones: 1, twos: 2})).toEqual(2)
-    expect(chooser.choose({ ones: 1, twos: 2})).toEqual(1)
-  })
-})
-
-describe('YahtzeeCategoryScorer', () => {
-  describe("sum of 1s", () => {
-    it.each(
-      [
-        [[1, 2, 3, 4, 5], 1],
-        [[1, 1, 1, 1, 5], 4],
-        [[5, 2, 3, 4, 5], 0],
-      ]
-    )("score matches expected val", (diceValues, expectedSum) => {
-      const categoryScorer = new YahtzeeCategoryScorer();
-      categoryScorer.score(diceValues)
-      expect(categoryScorer.sumOfOnes()).toEqual(expectedSum);
-    })
-  });
-
-  describe("sum of 2s", () => {
-    it.each(
-      [
-        [[1, 2, 3, 4, 5], 2],
-        [[2, 2, 2, 2, 5], 8],
-        [[5, 1, 3, 4, 5], 0],
-      ]
-    )("score matches expected val", (diceValues, expectedSum) => {
-      const categoryScorer = new YahtzeeCategoryScorer();
-      categoryScorer.score(diceValues)
-      expect(categoryScorer.sumOfTwos()).toEqual(expectedSum);
-    })
-  });
-
-  it('returns entire categoryScore', () => {
-    const categoryScorer = new YahtzeeCategoryScorer();
-    expect(categoryScorer.score([1, 2, 1, 2, 2])).toEqual({
-      ones: 2,
-      twos: 6
-    })
   })
 })
 
