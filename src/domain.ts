@@ -10,4 +10,8 @@ export interface CategoryScorer {
 export type CategoryScores = {
   ones: number;
   twos: number;
+  threes: number;
+  fours: number;
+  fives: number;
+  sixes: number;
 }

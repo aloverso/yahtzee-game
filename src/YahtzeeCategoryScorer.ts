@@ -8,7 +8,11 @@ export class YahtzeeCategoryScorer implements CategoryScorer {
     this.currentRoll = roll
     return {
       ones: this.sumOfOnes(),
-      twos: this.sumOfTwos()
+      twos: this.sumOfTwos(),
+      threes: this.sumOfThrees(),
+      fours: this.sumOfFours(),
+      fives: this.sumOfFives(),
+      sixes: this.sumOfSixes()
     }
   }
 
@@ -18,6 +22,22 @@ export class YahtzeeCategoryScorer implements CategoryScorer {
 
   sumOfTwos() {
     return this.sumOfNumber(2)
+  }
+
+  sumOfThrees() {
+    return this.sumOfNumber(3)
+  }
+
+  sumOfFours() {
+    return this.sumOfNumber(4)
+  }
+
+  sumOfFives() {
+    return this.sumOfNumber(5)
+  }
+
+  sumOfSixes() {
+    return this.sumOfNumber(6)
   }
 
   private sumOfNumber(num: number): number {

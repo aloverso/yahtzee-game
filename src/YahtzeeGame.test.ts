@@ -30,12 +30,12 @@ describe('Yahtzee Game', () => {
 
   it('uses a chooser and a categoryScorer to choose and score a category', () => {
     const game = new YahtzeeGame(categoryScorer, chooser);
-    categoryScorer.setScoreReturn({ ones: 1, twos: 2})
+    categoryScorer.setScoreReturn({ ones: 1, twos: 2, threes: 0, fours: 0, fives: 0, sixes: 0 })
     chooser.setChooseReturn(2)
     game.roll([1,2,3,4,5])
     expect(game.score()).toEqual(2)
     expect(categoryScorer.scoreCalledWith).toEqual([1,2,3,4,5])
-    expect(chooser.chooseCalledWith).toEqual({ ones: 1, twos: 2})
+    expect(chooser.chooseCalledWith).toEqual({ ones: 1, twos: 2, threes: 0, fours: 0, fives: 0, sixes: 0 })
   })
 
   it('plays a real game', () => {
@@ -43,9 +43,9 @@ describe('Yahtzee Game', () => {
     const realCategoryScorer = new YahtzeeCategoryScorer()
     const game = new YahtzeeGame(realCategoryScorer, realChooser);
     game.roll([1,2,2,1,5])
-    expect(game.score()).toEqual(4) // score twos
+    expect(game.score()).toEqual(5) // score fives
     game.roll([1,2,2,1,5])
-    expect(game.score()).toEqual(6) // score ones
+    expect(game.score()).toEqual(9) // score twos
   })
 })
 
