@@ -18,8 +18,8 @@ export class YahtzeeGame {
   }
 
   roll (roll: number[]): void {
-    if (this.round > 13) {
-      return;
+    if (this.gameIsOver()) {
+      return
     }
 
     const scores = this.categoryScorer.score(roll)
@@ -30,6 +30,15 @@ export class YahtzeeGame {
   }
 
   score (): number {
+    if (this.gameIsOver()) {
+      const yahtzeeBonus = this.scorecard.hasYahtzeeBonus() ? 100 : 0
+      const oneThroughSixBonus = this.scorecard.hasOnesThroughSixesBonus() ? 35 : 0
+      return this.runningScore + yahtzeeBonus + oneThroughSixBonus
+    }
     return this.runningScore
+  }
+
+  private gameIsOver(): boolean {
+    return this.round > 13;
   }
 }

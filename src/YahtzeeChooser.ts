@@ -20,7 +20,7 @@ export class YahtzeeChooser implements Chooser {
         remainingCategories[key] = categoryScores[key]
       }
     }
-    
+
     let max = -1;
     let maxCategory = ''
     for (const category of Object.keys(remainingCategories)) {

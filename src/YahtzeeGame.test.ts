@@ -52,5 +52,38 @@ describe('Yahtzee Game', () => {
     game.roll([1,2,2,1,5])
     expect(game.score()).toEqual(16) // score fives
   })
+
+  it('applies bonuses at game end', () => {
+    const scorecard = new Scorecard()
+    const realChooser = new YahtzeeChooser(scorecard)
+    const realCategoryScorer = new YahtzeeCategoryScorer()
+    const game = new YahtzeeGame(realCategoryScorer, realChooser, scorecard);
+    game.roll([5,5,5,5,5])
+    expect(game.score()).toEqual(50) // score yahtzee
+    game.roll([5,5,5,5,5])
+    expect(game.score()).toEqual(75) // score fives +25
+    game.roll([5,5,5,5,5])
+    expect(game.score()).toEqual(100) // score 4 of a kind +25
+    game.roll([5,5,5,5,5])
+    expect(game.score()).toEqual(125) // score 3 of a kind +25
+    game.roll([5,5,5,5,5])
+    expect(game.score()).toEqual(150) // score chance +25
+    game.roll([1,1,1,1,1])
+    expect(game.score()).toEqual(155) // score ones
+    game.roll([2,2,2,2,2])
+    expect(game.score()).toEqual(165) // score twos
+    game.roll([3,3,3,3,3])
+    expect(game.score()).toEqual(180) // score threes
+    game.roll([4,4,4,4,4])
+    expect(game.score()).toEqual(200) // score fours
+    game.roll([6,6,6,6,6])
+    expect(game.score()).toEqual(230) // score sixes
+    game.roll([5,5,5,5,5])
+    expect(game.score()).toEqual(230) // score full house
+    game.roll([5,5,5,5,5])
+    expect(game.score()).toEqual(230) // score small straight
+    game.roll([5,5,5,5,5])
+    expect(game.score()).toEqual(365) // score large straight + one-through-six bonus + yahtzee bonus
+  })
 })
 
