@@ -1,4 +1,4 @@
-import {CategoryScores} from "./domain";
+import {Category, CategoryScores} from "./domain";
 
 export class Scorecard {
   chosenCategories: string[]
@@ -23,11 +23,11 @@ export class Scorecard {
     }
   }
 
-  isAlreadyChosen(category: string): boolean {
+  isAlreadyChosen(category: Category): boolean {
     return this.chosenCategories.includes(category)
   }
 
-  scoreCategory(category: string, score: number): void {
+  scoreCategory(category: Category, score: number): void {
     this.chosenCategories.push(category)
     this.scores[category] = score
   }
