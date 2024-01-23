@@ -1,4 +1,5 @@
 import {CategoryScorer, Chooser} from "./domain";
+import {Scorecard} from "./Scorecard";
 
 export class YahtzeeGame {
 
@@ -6,11 +7,13 @@ export class YahtzeeGame {
   private round: number;
   private categoryScorer: CategoryScorer;
   private chooser: Chooser;
+  private scorecard: Scorecard;
 
-  constructor(categoryScorer: CategoryScorer, chooser: Chooser) {
+  constructor(categoryScorer: CategoryScorer, chooser: Chooser, scorecard: Scorecard) {
     this.round = 1;
     this.chooser = chooser
     this.categoryScorer = categoryScorer
+    this.scorecard = scorecard
     this.runningScore = 0;
   }
 
