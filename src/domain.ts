@@ -22,5 +22,3 @@ export type CategoryScores = {
   yahtzee: number;
   chance: number;
 }
-
-export type Category = keyof CategoryScores;

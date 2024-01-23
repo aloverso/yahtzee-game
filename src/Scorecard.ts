@@ -1,4 +1,6 @@
-import {Category, CategoryScores} from "./domain";
+import {CategoryScores} from "./domain";
+
+const ONES_THROUGH_SIXES_BONUS_SCORE = 63;
 
 export class Scorecard {
   private chosenCategories: string[]
@@ -33,11 +35,21 @@ export class Scorecard {
     return this.yahtzeeBonus
   }
 
-  isAlreadyChosen(category: Category): boolean {
+  hasOnesThroughSixesBonus(): boolean {
+    return (
+      this.scores.ones +
+      this.scores.twos +
+      this.scores.threes +
+      this.scores.fours +
+      this.scores.fives +
+      this.scores.sixes) >= ONES_THROUGH_SIXES_BONUS_SCORE
+  }
+
+  isAlreadyChosen(category: string): boolean {
     return this.chosenCategories.includes(category)
   }
 
-  scoreCategory(category: Category, score: number): void {
+  scoreCategory(category: string, score: number): void {
     this.chosenCategories.push(category)
     this.scores[category] = score
   }
